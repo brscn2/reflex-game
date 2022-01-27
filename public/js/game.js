@@ -97,6 +97,8 @@ $(document).ready(() => {
 
     $("#game-button").click(() => {
         if (score === -1) {
+            $("#game-button").attr("disabled", true);
+
             $("#game-button").css("opacity", "0.6");
             $("#game-button").css("padding", "3rem 3.9rem");
 
@@ -114,6 +116,7 @@ $(document).ready(() => {
                 if (timer === 0) {
                     clearInterval(countdown);
 
+                    $("#game-button").removeAttr("disabled");
                     $("#game-button").css("opacity", "1");
 
                     $("h1").text("Welcome to Reflex Game!");

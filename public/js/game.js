@@ -6,9 +6,13 @@ $(document).ready(() => {
     });
 
     let gameInterval;
-    let remainingTimeInterval;
     let intervalTime = 6000;
-    let score = -1;
+
+    let remainingTimeInterval;
+    let remainingTime = 0;
+
+    let score = 0;
+    let clickCount = -1;
 
     $("#game-button").text("Start!");
     $("#game-button").css("padding", "3rem 2.5rem");
@@ -43,7 +47,7 @@ $(document).ready(() => {
     const gameOver = () => {
         clearInterval(remainingTimeInterval);
 
-        $("#score").text(`Your score is ${score}`);
+        $("#score").text(`Your score is ${Math.floor(score / 100)}`);
         $("#game-screen").css("text-align", "center");
 
         $("#game-button").text("Start!");
@@ -63,10 +67,19 @@ $(document).ready(() => {
         $("#game-button").css("left", "0");
         $("#game-button").css("top", "0");
 
-        score = -1;
+        remainingTime = 0;
+
+        score = 0;
+        clickCount = -1;
     }
 
     const gameLoop = () => {
+        if (clickCount < 50) {
+            score += remainingTime * (clickCount / 10);
+        } else {
+            score += remainingTime * clickCount;
+        }
+
         clearInterval(remainingTimeInterval);
 
         $("#game-button").removeClass("btn-warning");
@@ -83,16 +96,16 @@ $(document).ready(() => {
         $("#game-button").css("transition", "0.1s ease-in-out");
         offsetButton();
 
-        score++;
-        $("#score").text(`Score: ${score}`);
+        $("#score").text(`Score: ${Math.floor(score / 100)}`);
 
-        if (score < 50) {
-            intervalTime = 6000 - 1000 * Math.floor((score / 10));
+        if (clickCount < 50) {
+            intervalTime = 6000 - 1000 * Math.floor((clickCount / 10));
         } else {
             intervalTime = 750;
         }
         
         remainingTime = intervalTime;
+        
         remainingTimeInterval = setInterval(() => {
             $("#game-button").text(remainingTime);
             remainingTime -= 100;
@@ -105,7 +118,9 @@ $(document).ready(() => {
     }
 
     $("#game-button").click(() => {
-        if (score === -1) {
+        clickCount++;
+
+        if (clickCount === 0) {
             $("#game-button").attr("disabled", true);
 
             $("#game-button").css("opacity", "0.6");

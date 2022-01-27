@@ -10,7 +10,7 @@ $(document).ready(() => {
     let score = -1;
 
     $("#game-button").text("Start!");
-    $("#game-button").css("padding", "6% 5%");
+    $("#game-button").css("padding", "3rem 2.5rem");
 
     const randomLeftCoordinate = () => {
         let leftOffset = Math.floor(Math.random() * 90);
@@ -40,26 +40,30 @@ $(document).ready(() => {
     }
 
     const gameOver = () => {
-        alert(score);
-
+        $("#score").text(`Your score is ${score}`);
         $("#game-screen").css("text-align", "center");
 
         $("#game-button").text("Start!");
 
         $("#game-button").addClass("btn-warning");
 
+        $("#game-button").attr("disabled", true);
+
+        setTimeout(() => {
+            $("#game-button").removeAttr("disabled");
+            $("#game-button").css("opacity", "1");
+        }, 2000);
+
         $("#game-button").css("background-color", "");
-        $("#game-button").css("padding", "6% 5%");
+        $("#game-button").css("opacity", "0.6");
+        $("#game-button").css("padding", "3rem 2.5rem");
         $("#game-button").css("left", "0");
         $("#game-button").css("top", "0");
 
-        score = 0;
-        $("#score").text(score);
+        score = -1;
     }
 
-    $("#game-button").click(() => {
-        $("#game-screen").css("text-align", "left");
-
+    const gameLoop = () => {
         $("#game-button").text("Here!");
 
         $("#game-button").removeClass("btn-warning");
@@ -69,13 +73,15 @@ $(document).ready(() => {
 
         $("#game-button").css("background-color", `${randomButtonColor()}`);
 
+        $("#game-screen").css("text-align", "left");
+
         clearInterval(gameInterval);
 
         $("#game-button").css("transition", "0.1s ease-in-out");
         offsetButton();
 
         score++;
-        $("#score").text(score);
+        $("#score").text(`Score: ${score}`);
 
         if (score < 50) {
             intervalTime = 6000 - 1000 * (score / 10);
@@ -87,5 +93,36 @@ $(document).ready(() => {
             gameOver();
             clearInterval(gameInterval);
         }, intervalTime);
+    }
+
+    $("#game-button").click(() => {
+        if (score === -1) {
+            $("#game-button").css("opacity", "0.6");
+            $("#game-button").css("padding", "3rem 3.9rem");
+
+            $("#score").text("Score: 0");
+
+            let timer = 3;
+            $("h1").text(`Game starts in ${timer}!`);
+            $("#game-button").text(`${timer}!`);
+
+            const countdown = setInterval(() => {
+                timer--;
+                $("h1").text(`Game starts in ${timer}!`);
+                $("#game-button").text(`${timer}!`);
+
+                if (timer === 0) {
+                    clearInterval(countdown);
+
+                    $("#game-button").css("opacity", "1");
+
+                    $("h1").text("Welcome to Reflex Game!");
+
+                    gameLoop();
+                }
+            }, 1000);
+        } else {
+            gameLoop();
+        }
     })
 })

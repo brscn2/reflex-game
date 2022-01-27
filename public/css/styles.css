@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     text-align: center;
     background-color: #7678ed;
     margin: 20px 10px 10px;
@@ -29,12 +30,11 @@ button {
     border-color: black;
     font-size: 24px;
     color: white;
+    display: inline-block;
 }
 
 #game-screen {
-    /* background-color: aliceblue; */
     margin: 20px auto;
     text-align: center;
     height: calc(100vh - 12rem);
-    width: calc(100vw - 0.5rem);
 }

@@ -14,11 +14,13 @@ html, body {
 
 #game-button {
     position: relative;
-    padding: 6% 5%;
+    font-size: 24px;
 }
 
 #game-screen {
+    /* background-color: aliceblue; */
     margin: 20px auto;
     text-align: center;
-    height: 600px;
+    height: calc(100vh - 12rem);
+    width: calc(100vw - 0.5rem);
 }

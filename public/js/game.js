@@ -10,7 +10,7 @@ $(document).ready(() => {
     let score = -1;
 
     $("#game-button").text("Start!");
-    $("#game-button").css("padding", "6% 5%");
+    $("#game-button").css("padding", "3rem 2.5rem");
 
     const randomLeftCoordinate = () => {
         let leftOffset = Math.floor(Math.random() * 90);
@@ -47,8 +47,16 @@ $(document).ready(() => {
 
         $("#game-button").addClass("btn-warning");
 
+        $("#game-button").attr("disabled", true);
+
+        setTimeout(() => {
+            $("#game-button").removeAttr("disabled");
+            $("#game-button").css("opacity", "1");
+        }, 2000);
+
         $("#game-button").css("background-color", "");
-        $("#game-button").css("padding", "6% 5%");
+        $("#game-button").css("opacity", "0.6");
+        $("#game-button").css("padding", "3rem 2.5rem");
         $("#game-button").css("left", "0");
         $("#game-button").css("top", "0");
 
@@ -56,8 +64,6 @@ $(document).ready(() => {
     }
 
     const gameLoop = () => {
-        $("#game-screen").css("text-align", "left");
-
         $("#game-button").text("Here!");
 
         $("#game-button").removeClass("btn-warning");
@@ -66,6 +72,8 @@ $(document).ready(() => {
         $("#game-button").css("padding", `${size + 1}% ${size}%`);
 
         $("#game-button").css("background-color", `${randomButtonColor()}`);
+
+        $("#game-screen").css("text-align", "left");
 
         clearInterval(gameInterval);
 
@@ -89,21 +97,24 @@ $(document).ready(() => {
 
     $("#game-button").click(() => {
         if (score === -1) {
+            $("#game-button").css("opacity", "0.6");
+            $("#game-button").css("padding", "3rem 3.9rem");
+
             $("#score").text("Score: 0");
 
             let timer = 3;
             $("h1").text(`Game starts in ${timer}!`);
-
-            $("#game-button").css("display", "none");
+            $("#game-button").text(`${timer}!`);
 
             const countdown = setInterval(() => {
                 timer--;
                 $("h1").text(`Game starts in ${timer}!`);
+                $("#game-button").text(`${timer}!`);
 
                 if (timer === 0) {
                     clearInterval(countdown);
 
-                    $("#game-button").css("display", "inline-block");
+                    $("#game-button").css("opacity", "1");
 
                     $("h1").text("Welcome to Reflex Game!");
 

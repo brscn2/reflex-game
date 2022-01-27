@@ -40,8 +40,7 @@ $(document).ready(() => {
     }
 
     const gameOver = () => {
-        alert(score);
-
+        $("#score").text(`Your score is ${score}`);
         $("#game-screen").css("text-align", "center");
 
         $("#game-button").text("Start!");
@@ -53,11 +52,10 @@ $(document).ready(() => {
         $("#game-button").css("left", "0");
         $("#game-button").css("top", "0");
 
-        score = 0;
-        $("#score").text(score);
+        score = -1;
     }
 
-    $("#game-button").click(() => {
+    const gameLoop = () => {
         $("#game-screen").css("text-align", "left");
 
         $("#game-button").text("Here!");
@@ -75,7 +73,7 @@ $(document).ready(() => {
         offsetButton();
 
         score++;
-        $("#score").text(score);
+        $("#score").text(`Score: ${score}`);
 
         if (score < 50) {
             intervalTime = 6000 - 1000 * (score / 10);
@@ -87,5 +85,33 @@ $(document).ready(() => {
             gameOver();
             clearInterval(gameInterval);
         }, intervalTime);
+    }
+
+    $("#game-button").click(() => {
+        if (score === -1) {
+            $("#score").text("Score: 0");
+
+            let timer = 3;
+            $("h1").text(`Game starts in ${timer}!`);
+
+            $("#game-button").css("display", "none");
+
+            const countdown = setInterval(() => {
+                timer--;
+                $("h1").text(`Game starts in ${timer}!`);
+
+                if (timer === 0) {
+                    clearInterval(countdown);
+
+                    $("#game-button").css("display", "inline-block");
+
+                    $("h1").text("Welcome to Reflex Game!");
+
+                    gameLoop();
+                }
+            }, 1000);
+        } else {
+            gameLoop();
+        }
     })
 })

@@ -1,0 +1,24 @@
+html, body {
+    text-align: center;
+    background-color: #7678ed;
+    margin: 20px 10px 10px;
+}
+
+.header {
+    color: #f7b801;
+}
+
+.score-text {
+    color: rgb(74, 49, 121);
+}
+
+#game-button {
+    position: relative;
+    padding: 6% 5%;
+}
+
+#game-screen {
+    margin: 20px auto;
+    text-align: center;
+    height: 600px;
+}

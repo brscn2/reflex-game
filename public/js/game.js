@@ -6,6 +6,7 @@ $(document).ready(() => {
     });
 
     let gameInterval;
+    let remainingTimeInterval;
     let intervalTime = 6000;
     let score = -1;
 
@@ -40,6 +41,8 @@ $(document).ready(() => {
     }
 
     const gameOver = () => {
+        clearInterval(remainingTimeInterval);
+
         $("#score").text(`Your score is ${score}`);
         $("#game-screen").css("text-align", "center");
 
@@ -64,7 +67,7 @@ $(document).ready(() => {
     }
 
     const gameLoop = () => {
-        $("#game-button").text("Here!");
+        clearInterval(remainingTimeInterval);
 
         $("#game-button").removeClass("btn-warning");
 
@@ -84,10 +87,16 @@ $(document).ready(() => {
         $("#score").text(`Score: ${score}`);
 
         if (score < 50) {
-            intervalTime = 6000 - 1000 * (score / 10);
+            intervalTime = 6000 - 1000 * Math.floor((score / 10));
         } else {
             intervalTime = 750;
         }
+        
+        remainingTime = intervalTime;
+        remainingTimeInterval = setInterval(() => {
+            $("#game-button").text(remainingTime);
+            remainingTime -= 100;
+        }, 100)
 
         gameInterval = setInterval(() => {
             gameOver();

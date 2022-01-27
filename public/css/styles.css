@@ -4,17 +4,31 @@ html, body {
     margin: 20px 10px 10px;
 }
 
+h1 {
+    font-weight: bold;
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+}
+
+button {
+    font-weight: bold;
+}
+
 .header {
     color: #f7b801;
 }
 
-.score-text {
-    color: rgb(74, 49, 121);
-}
-
 #game-button {
     position: relative;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
     font-size: 24px;
+    color: white;
 }
 
 #game-screen {
